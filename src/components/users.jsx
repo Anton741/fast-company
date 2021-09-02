@@ -1,31 +1,21 @@
-import User from './user'
-import SearchStatus  from './search_status';
-
+import User from './user';
+import SearchStatus from './search_status';
+import Pagination from './pagination';
+import { SiparatePage } from '../utils/seperatePage';
+import { useState } from 'react';
 
 const Users = ({ onDelete, onAddBookmark, users }) => {
-  const qulitieClass = (classEnd) => {
-    return `badge bg-${classEnd} mx-2 fs-6`;
-  };
+  const count = users.length;
+  const pageSize = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersOnPage = SiparatePage(users, pageSize, currentPage);
 
-  const nounWithNumerals = () => {
-    if (users.length > 20) {
-      if ([2, 3, 4].includes(String(users.length)[users.length - 1])) {
-        return 'человека';
-      } else {
-        return 'человек';
-      }
-    } else {
-      if ([2, 3, 4].includes(users.length)) {
-        return 'человека тусанет';
-      } else {
-        return 'человек тусанут';
-      }
-    }
+  const ChangePage = (page) => {
+    setCurrentPage(page);
   };
   return (
     <>
-      <SearchStatus nounWithNumerals={nounWithNumerals} users={users}>
-      </SearchStatus>
+      <SearchStatus users={users}></SearchStatus>
       {users.length > 0 && (
         <table className="table">
           <thead>
@@ -40,13 +30,12 @@ const Users = ({ onDelete, onAddBookmark, users }) => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
+            {usersOnPage.map((user) => {
               return (
                 <User
                   onDelete={onDelete}
-                  onQualitiesClass={qulitieClass}
-                  statusBookmark = {user.bookmark}
-                  onAddBookmark = {onAddBookmark}
+                  statusBookmark={user.bookmark}
+                  onAddBookmark={onAddBookmark}
                   {...user}
                 ></User>
               );
@@ -54,9 +43,13 @@ const Users = ({ onDelete, onAddBookmark, users }) => {
           </tbody>
         </table>
       )}
+      <Pagination
+        pageSize={pageSize}
+        itemCount={count}
+        onChangePage={ChangePage}
+        currentPage={currentPage}
+      ></Pagination>
     </>
   );
 };
 export default Users;
-
-  

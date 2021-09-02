@@ -1,8 +1,11 @@
-import './bookmarks.css'
+import './bookmarks.css';
 
 const Bookmarks = (props) => {
   return (
-    <button onClick={() => props.onAddBookmarks(props.user_id)} className="btn ">
+    <button
+      onClick={() => props.onAddBookmarks(props.user_id)}
+      className="btn "
+    >
       {props.statusBookmark && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,5 +35,5 @@ const Bookmarks = (props) => {
       )}
     </button>
   );
-}
+};
 export default Bookmarks;

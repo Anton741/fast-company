@@ -1,15 +1,33 @@
-import Qualities  from "./qualities";
-import Bookmarks from "./bookmark";
-import React, { useState } from 'react';
+import Qualities from './qualities';
+import Bookmarks from './bookmark';
 
+const User = ({
+  qualities,
+  name,
+  profession,
+  completedMeetings,
+  rate,
+  onDelete,
+  _id,
+  statusBookmark,
+  onAddBookmark,
+}) => {
+  const qulitieClass = (classEnd) => {
+    return `badge bg-${classEnd} mx-2 fs-6`;
+  };
 
-const User = ({onQualitiesClass, qualities, name, profession, completedMeetings, rate, onDelete, _id, statusBookmark, onAddBookmark}) => {
   return (
-    <tr >
+    <tr>
       <td>{name}</td>
-      <Qualities onClass={onQualitiesClass} qualities={qualities}></Qualities>
+      <Qualities onClass={qulitieClass} qualities={qualities}></Qualities>
       <td>{profession.name}</td>
-    <td className = 'text-center'><Bookmarks onAddBookmarks = {onAddBookmark} statusBookmark = {statusBookmark} user_id = {_id}></Bookmarks></td>
+      <td className="text-center">
+        <Bookmarks
+          onAddBookmarks={onAddBookmark}
+          statusBookmark={statusBookmark}
+          user_id={_id}
+        ></Bookmarks>
+      </td>
       <td>{completedMeetings}</td>
       <td>{rate}/5</td>
       <td>
@@ -19,6 +37,6 @@ const User = ({onQualitiesClass, qualities, name, profession, completedMeetings,
       </td>
     </tr>
   );
-}
+};
 
 export default User;
