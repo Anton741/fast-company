@@ -1,20 +1,48 @@
 import User from "./user";
 import SearchStatus from "./search_status";
 import Pagination from "./pagination";
+import GroupList from "./groupList";
 import { SiparatePage } from "../utils/seperatePage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../api/index";
 
 const Users = ({ onDelete, onAddBookmark, users }) => {
-    const count = users.length;
-    const pageSize = 5;
+    const pageSize = 2;
     const [currentPage, setCurrentPage] = useState(1);
-    const usersOnPage = SiparatePage(users, pageSize, currentPage);
+    const [proffessions, setProfessions] = useState();
+    const [selectedProfession, setSelectedProfession] = useState();
+    useEffect(function() {
+        api.professions.fetchAll().then((data) => setProfessions(data));
+    }, []);
 
     const ChangePage = (page) => {
         setCurrentPage(page);
     };
+    const filtretedUser = selectedProfession
+        ? users.filter((user) => user.profession.name === selectedProfession)
+        : users;
+    const count = filtretedUser.length;
+    const usersOnPage = SiparatePage(filtretedUser, pageSize, currentPage);
     return (
         <>
+            {proffessions && (
+                <>
+                    <GroupList
+                        professions={proffessions}
+                        onFilter={(e) => {
+                            setCurrentPage(1);
+                            setSelectedProfession(e);
+                        }}
+                        selectedProfession={selectedProfession}
+                    ></GroupList>
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => setSelectedProfession()}
+                    >
+                        Очистить
+                    </button>
+                </>
+            )}
             <SearchStatus users={users}></SearchStatus>
             {users.length > 0 && (
                 <table className="table">
@@ -33,7 +61,7 @@ const Users = ({ onDelete, onAddBookmark, users }) => {
                         {usersOnPage.map((user) => {
                             return (
                                 <User
-                                    key = {user._id}
+                                    key={user._id}
                                     onDelete={onDelete}
                                     statusBookmark={user.bookmark}
                                     onAddBookmark={onAddBookmark}
