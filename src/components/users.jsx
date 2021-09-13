@@ -19,7 +19,10 @@ const Users = ({ onDelete, onAddBookmark, users }) => {
         setCurrentPage(page);
     };
     const filtretedUser = selectedProfession
-        ? users.filter((user) => user.profession.name === selectedProfession)
+        ? users.filter((user) => {
+            console.log(proffessions);
+            return user.profession.name === selectedProfession;
+        })
         : users;
     const count = filtretedUser.length;
     const usersOnPage = SiparatePage(filtretedUser, pageSize, currentPage);

@@ -1,5 +1,4 @@
-// import PropTypes from "prop-types";
-
+import propTypes from "prop-types";
 const GroupList = ({
     professions,
     onFilter,
@@ -37,12 +36,12 @@ GroupList.defaultProps = {
     valueProperty: "_id"
 };
 
-// GroupList.PropTypes = {
-//     professions: PropTypes.object.isRequired,
-//     onFilter: PropTypes.func.isRequired,
-//     selectedProfession: PropTypes.object.isRequired,
-//     valueProperty: PropTypes.string.isRequired,
-//     contentProperty: PropTypes.string.isRequired
-// };
+GroupList.PropTypes = {
+    professions: propTypes.oneOfType([propTypes.object, propTypes.array]),
+    onFilter: propTypes.func.isRequired,
+    selectedProfession: propTypes.object.isRequired,
+    valueProperty: propTypes.string.isRequired,
+    contentProperty: propTypes.string.isRequired
+};
 
 export default GroupList;
