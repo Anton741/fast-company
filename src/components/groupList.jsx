@@ -8,7 +8,7 @@ const GroupList = ({
     contentProperty
 }) => {
     return (
-        <ul className="list-group">
+        <ul className="list-group ">
             {Object.keys(professions).map((item) => {
                 return (
                     <li
@@ -16,11 +16,14 @@ const GroupList = ({
                             selectedProfession ===
                             professions[item][contentProperty]
                                 ? "list-group-item active"
-                                : "list-group-item "
+                                : "list-group-item list-group-item-action"
                         }
                         key={professions[item][valueProperty]}
-                        onClick={() => onFilter(professions[item][contentProperty])}
-                        role="button">
+                        onClick={() =>
+                            onFilter(professions[item][contentProperty])
+                        }
+                        role="button"
+                    >
                         {professions[item][contentProperty]}
                     </li>
                 );

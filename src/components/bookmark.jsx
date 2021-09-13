@@ -4,7 +4,7 @@ const Bookmarks = (props) => {
     return (
         <button
             onClick={() => props.onAddBookmarks(props.user_id)}
-            className="btn "
+            className="btn btn__bokmarks"
         >
             {props.statusBookmark && (
                 <svg
