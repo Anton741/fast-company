@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "./api/index";
 import Users from "./components/users";
 
 const App = () => {
-    const [users, delUser] = useState(api.users.fetchAll());
+    const [users, delUser] = useState();
+
+    useEffect(function() {
+        api.users.fetchAll().then((data) => {
+            delUser(data);
+        });
+    }, []);
 
     const deleteUser = (user_id) => {
         return delUser(users.filter((element) => element._id !== user_id));
@@ -24,11 +30,13 @@ const App = () => {
 
     return (
         <>
-            <Users
-                onDelete={deleteUser}
-                onAddBookmark={AddBookmarks}
-                users={users}
-            ></Users>
+            {users && (
+                <Users
+                    onDelete={deleteUser}
+                    onAddBookmark={AddBookmarks}
+                    users={users}
+                ></Users>
+            )}
         </>
     );
 };
