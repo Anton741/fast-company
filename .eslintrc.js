@@ -21,6 +21,6 @@ module.exports = {
         "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
         "space-before-function-paren": ["error", "never"],
         camelcase: ["error", { allow: ["user_id"] }],
-        "react/prop-types": "off",
+        "react/prop-types": "off"
     }
 };

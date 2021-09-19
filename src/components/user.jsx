@@ -15,7 +15,6 @@ const User = ({
     const qulitieClass = (classEnd) => {
         return `badge bg-${classEnd} mx-2 fs-6`;
     };
-
     return (
         <tr>
             <td>{name}</td>
@@ -33,7 +32,7 @@ const User = ({
             <td>
                 <button
                     className="btn btn-danger"
-                    onClick={onDelete.bind(this, _id)}
+                    onClick={() => onDelete(_id)}
                 >
                     Delete
                 </button>

@@ -1,14 +1,14 @@
 const Qualities = (props) => {
     return (
-        <td>
+        <>
             {props.qualities.map((colorBlock) => {
                 return (
-                    <span className={props.onClass(colorBlock.color)} key = {colorBlock._id}>
+                    <span className={`badge bg-${colorBlock.color} mx-2 fs-6`} key = {colorBlock._id}>
                         {colorBlock.name}
                     </span>
                 );
             })}
-        </td>
+        </>
     );
 };
 export default Qualities;
