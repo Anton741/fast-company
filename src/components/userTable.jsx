@@ -38,21 +38,26 @@ const TableUsers = ({
         rate: { iter: "rate", name: "Оценка" },
         delete: {
             component: (user) => (
-                <button className="btn btn-danger" onClick={() => onDelete(user._id)}>
-            Delete
+                <button
+                    className="btn btn-danger"
+                    onClick={() => onDelete(user._id)}
+                >
+                    Delete
                 </button>
             )
         }
     };
     return (
-        <Table>
-            <TableHeader
-                onSort={onSort}
-                currentSort={currentSort}
-                columns={columns}
-            ></TableHeader>
-            <TableBody data={sortedUsers} columns={columns}></TableBody>
-        </Table>
+        <>
+            <Table>
+                <TableHeader
+                    onSort={onSort}
+                    currentSort={currentSort}
+                    columns={columns}
+                ></TableHeader>
+                <TableBody data={sortedUsers} columns={columns}></TableBody>
+            </Table>
+        </>
     );
 };
 

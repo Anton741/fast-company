@@ -6,6 +6,8 @@ import { SiparatePage } from "../utils/seperatePage";
 import api from "../api/index";
 import _ from "lodash";
 import TableUsers from "./userTable";
+import UserCard from "./userCard";
+import { Route, Switch, useParams } from "react-router";
 
 const Users = () => {
     const [users, delUser] = useState();
@@ -49,7 +51,13 @@ const Users = () => {
             return user.profession.name === selectedProfession;
         })
         : users;
-
+    if (useParams().userId) {
+        return (
+            <Switch>
+                <Route path="/users/:userId" component={() => <UserCard />} />;
+            </Switch>
+        );
+    }
     if (users) {
         const count = filtretedUser.length;
         const usersOnPage = SiparatePage(filtretedUser, pageSize, currentPage);
