@@ -7,14 +7,17 @@ import api from "../api/index";
 import _ from "lodash";
 import TableUsers from "./userTable";
 import UserCard from "./userCard";
+import Search from "./search";
 import { Route, Switch, useParams } from "react-router";
 
 const Users = () => {
     const [users, delUser] = useState();
-
+    const [initialUsers, setInitialUsers] = useState();
+    // let initialData;
     useEffect(function() {
         api.users.fetchAll().then((data) => {
             delUser(data);
+            setInitialUsers(data);
         });
     }, []);
 
@@ -39,15 +42,22 @@ const Users = () => {
     const [proffessions, setProfessions] = useState();
     const [selectedProfession, setSelectedProfession] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "acs" });
+    const [searchValue, setSearchValue] = useState("");
     useEffect(function() {
         api.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
+    useEffect(function() {
+        setSearchValue("");
+    }, [selectedProfession]);
+    useEffect(function() {
+        setSelectedProfession();
+    }, [searchValue]);
 
     const ChangePage = (page) => {
         setCurrentPage(page);
     };
     const filtretedUser = selectedProfession
-        ? users.filter((user) => {
+        ? initialUsers.filter((user) => {
             return user.profession.name === selectedProfession;
         })
         : users;
@@ -90,6 +100,7 @@ const Users = () => {
                     </div>
                 )}
                 <div className="d-flex flex-column">
+                    <Search setUser={delUser} users={initialUsers} setSearchValue={setSearchValue} searchValue = {searchValue}/>
                     <SearchStatus users={filtretedUser}></SearchStatus>
                     {users.length > 0 && (
                         <TableUsers
