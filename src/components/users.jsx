@@ -46,12 +46,19 @@ const Users = () => {
     useEffect(function() {
         api.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
-    useEffect(function() {
-        setSearchValue("");
-    }, [selectedProfession]);
-    useEffect(function() {
+    const handleSearch = (e) => {
         setSelectedProfession();
-    }, [searchValue]);
+        setSearchValue(e.target.value);
+        const re = new RegExp(e.target.value.toLowerCase(), "gi");
+        const searchResult = initialUsers.filter((user) => {
+            return user.name.toLowerCase().match(re);
+        });
+        delUser(searchResult);
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(searchValue);
+    };
 
     const ChangePage = (page) => {
         setCurrentPage(page);
@@ -88,6 +95,7 @@ const Users = () => {
                             onFilter={(e) => {
                                 setCurrentPage(1);
                                 setSelectedProfession(e);
+                                setSearchValue();
                             }}
                             selectedProfession={selectedProfession}
                         ></GroupList>
@@ -100,7 +108,7 @@ const Users = () => {
                     </div>
                 )}
                 <div className="d-flex flex-column">
-                    <Search setUser={delUser} users={initialUsers} setSearchValue={setSearchValue} searchValue = {searchValue}/>
+                    <Search onHandleSearch={handleSearch} onHandleSubmit = {handleSubmit} Value = {searchValue}/>
                     <SearchStatus users={filtretedUser}></SearchStatus>
                     {users.length > 0 && (
                         <TableUsers
