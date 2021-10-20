@@ -1,8 +1,9 @@
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
-import Table from "./table";
+import TableHeader from "../common/table/tableHeader";
+import TableBody from "../common/table/tableBody";
+import Table from "../common/table/table";
 import Bookmarks from "./bookmark";
 import Qualities from "./qualities";
+import { Link } from "react-router-dom";
 
 const TableUsers = ({
     users,
@@ -14,7 +15,7 @@ const TableUsers = ({
     ...rest
 }) => {
     const columns = {
-        name: { iter: "name", name: "Имя" },
+        name: { iter: "name", name: "Имя", component: user => <Link to = {`/users/${user._id}`} >{user.name}</Link> },
         qualities: {
             name: "Качества",
             component: (user) => <Qualities qualities={user.qualities} />

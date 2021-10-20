@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import SearchStatus from "./search_status";
-import Pagination from "./pagination";
-import GroupList from "./groupList";
-import { SiparatePage } from "../utils/seperatePage";
-import api from "../api/index";
+import SearchStatus from "../../ui/search_status";
+import Pagination from "../../common/pagination";
+import GroupList from "../../common/groupList";
+import { SiparatePage } from "../../../utils/seperatePage";
+import api from "../../../api/index";
 import _ from "lodash";
-import TableUsers from "./userTable";
-import UserCard from "./userCard";
-import Search from "./search";
-import { Route, Switch, useParams } from "react-router";
+import TableUsers from "../../ui/userTable";
+import Search from "../../common/form/search";
 
-const Users = () => {
+const UsersList = () => {
     const [users, delUser] = useState();
     const [initialUsers, setInitialUsers] = useState();
     // let initialData;
@@ -68,13 +66,6 @@ const Users = () => {
             return user.profession.name === selectedProfession;
         })
         : users;
-    if (useParams().userId) {
-        return (
-            <Switch>
-                <Route path="/users/:userId" component={() => <UserCard />} />;
-            </Switch>
-        );
-    }
     if (users) {
         const count = filtretedUser.length;
         const usersOnPage = SiparatePage(filtretedUser, pageSize, currentPage);
@@ -134,4 +125,4 @@ const Users = () => {
     }
     return "loading...";
 };
-export default Users;
+export default UsersList;

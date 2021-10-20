@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { Link } from "react-router-dom";
 
 const TableBody = ({ data, columns }) => {
     const renderComponent = (item, column) => {
@@ -18,9 +17,6 @@ const TableBody = ({ data, columns }) => {
                 return (
                     <tr key={item._id}>
                         {Object.keys(columns).map((column) => {
-                            if (column === "name") {
-                                return <td key={column}><Link to = {`/users/${item._id}`} >{item[column]}</Link></td>;
-                            }
                             return <td key={column}>{renderComponent(item, column)}</td>;
                         })}
                     </tr>

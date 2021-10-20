@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Qualities from "./qualities";
-import { useParams } from "react-router";
-import api from "../api/index";
+import Qualities from "../../ui/qualities";
+import api from "../../../api/index";
 
-const UserCard = () => {
+const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
-    api.users.getById(useParams().userId).then((data) => {
+    api.users.getById(userId).then((data) => {
         setUser(data);
     });
     const history = useHistory();
@@ -23,10 +22,8 @@ const UserCard = () => {
                 </button>
             </>
         );
-    };
-    return (
-        <h1>Loading...</h1>
-    );
+    }
+    return <h1>Loading...</h1>;
 };
 
-export default UserCard;
+export default UserPage;
