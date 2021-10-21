@@ -47,14 +47,14 @@ const LofinForm = () => {
                 <TextField
                     fieldType="email"
                     fieldName="email"
-                    fieldLable="Enter email"
+                    fieldLable="Введите логин/email"
                     onHandleChange={handleChange}
                     error={errors.email}
                 />
                 <TextField
                     fieldType="password"
                     fieldName="password"
-                    fieldLable="Enter password"
+                    fieldLable="Введите пароль"
                     onHandleChange={handleChange}
                     error={errors.password}
                 />

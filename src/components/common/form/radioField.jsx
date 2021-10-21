@@ -7,7 +7,7 @@ const RadioField = ({ options, label, name, onHandleChange, value }) => {
             <label htmlFor={`#${name}`} className="form-label">
                 {label}
             </label>
-            {options.map(option => {
+            {options.map((option) => {
                 return (
                     <div className="form-check" key={option.name}>
                         <input
@@ -28,7 +28,6 @@ const RadioField = ({ options, label, name, onHandleChange, value }) => {
                     </div>
                 );
             })}
-
         </div>
     );
 };

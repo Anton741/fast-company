@@ -10,9 +10,9 @@ const Login = ({ professions }) => {
             <div className="row">
                 <div className="col-md-6 offset0md-3 shadow p-4 mx-auto">
                     {formType !== "registration"
-                        ? (<><h3 className="mb-4">Login</h3>
+                        ? (<><h3 className="mb-4">Войти</h3>
                             <LoginForm /> <p onClick = {() => setFormType("registration")}>Create new account</p></>)
-                        : (<><h3 className="mb-4">Registration</h3>
+                        : (<><h3 className="mb-4">Регистрация</h3>
                             <RegistrationForm /> <p onClick = {() => setFormType("login")}>Already have account?</p></>)}
                 </div>
             </div>

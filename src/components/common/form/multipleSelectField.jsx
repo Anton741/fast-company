@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-const MultipleSelectField = ({ name, label, options, handleChange }) => {
+const MultipleSelectField = ({ name, label, options, handleChange, defaultV }) => {
     const onHandleChange = (value) => {
         console.log(value);
         handleChange({ name: name, value });
@@ -19,11 +19,12 @@ const MultipleSelectField = ({ name, label, options, handleChange }) => {
             </label>
             <Select
                 isMulti
+                defaultValue={defaultV}
                 name={name}
                 options={optionsArray}
                 className="basic-multi-select"
                 classNamePrefix="select"
-                onChange = {onHandleChange}
+                onChange={onHandleChange}
             />
         </div>
     );
