@@ -1,4 +1,4 @@
-const SelectField = ({ data, OnHandleChange, label, name, error, defaultOption }) => {
+const SelectField = ({ data, OnHandleChange, label, name, error, defaultOption, userId }) => {
     function getClasses() {
         return error ? "form-select is-invalid" : "form-control ";
     }
@@ -16,10 +16,10 @@ const SelectField = ({ data, OnHandleChange, label, name, error, defaultOption }
                 onChange={handleChange}
                 name={name}
             >
-                <option selected>{defaultOption}</option>
+                {defaultOption && <option selected>{defaultOption}</option>}
                 {Object.values(data).map((optionName) => {
                     return (
-                        <option value={optionName._id} key={optionName._id}>
+                        <option selected = {optionName._id === userId} value={optionName._id} key={optionName._id}>
                             {optionName.name}
                         </option>
                     );

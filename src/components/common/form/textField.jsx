@@ -8,7 +8,16 @@ const TextField = ({ fieldType, value, fieldName, fieldLable, onHandleChange, er
     return (
         <div className="mb-4">
             <label htmlFor={`#${fieldName}`} className ="form-label">{fieldLable}</label>
-            <input
+            {fieldType === "textarea" && <textarea
+                name={fieldName}
+                value={value}
+                aria-describedby="addon-wrapping"
+                id={fieldName}
+                placeholder={value}
+                onChange={handleChange}
+                className={getClasses()}
+            ></textarea> }
+            {fieldType !== "textarea" && <input
                 type={fieldType}
                 name={fieldName}
                 value={value}
@@ -17,7 +26,7 @@ const TextField = ({ fieldType, value, fieldName, fieldLable, onHandleChange, er
                 placeholder={value}
                 onChange={handleChange}
                 className={getClasses()}
-            ></input>
+            ></input>}
             {error && (
                 <div className="invalid-feedback" role="alert">
                     {error}

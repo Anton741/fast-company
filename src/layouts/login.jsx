@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import LoginForm from "../common/form/loginForm";
-import RegistrationForm from "../common/form/registrationForm";
+import LoginForm from "../components/common/form/loginForm";
+import RegistrationForm from "../components/common/form/registrationForm";
 const Login = ({ professions }) => {
     const { type } = useParams();
     const [formType, setFormType] = useState(type === "registration" ? "registration" : type);

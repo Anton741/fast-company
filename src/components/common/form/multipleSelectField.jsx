@@ -3,7 +3,6 @@ import Select from "react-select";
 
 const MultipleSelectField = ({ name, label, options, handleChange, defaultV }) => {
     const onHandleChange = (value) => {
-        console.log(value);
         handleChange({ name: name, value });
     };
     const optionsArray = typeof options === "object"

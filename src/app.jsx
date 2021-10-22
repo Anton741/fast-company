@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import UsersMain from "./components/layouts/users";
+import UsersMain from "./layouts/users";
 import NavBar from "./components/ui/navBar";
-import Login from "./components/layouts/login";
+import Login from "./layouts/login";
 // import EditForm from "./components/common/form/editForm";
 // import UserCard from "./components/userCard";
 
