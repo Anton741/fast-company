@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { useUsers } from "../../hooks/useUsers";
+import { useProfessions } from "../../hooks/useProfessions";
 import SearchStatus from "../../ui/search_status";
 import Pagination from "../../common/pagination";
 import GroupList from "../../common/groupList";
 import { SiparatePage } from "../../../utils/seperatePage";
-import api from "../../../api/index";
 import _ from "lodash";
 import TableUsers from "../../ui/userTable";
 import Search from "../../common/form/search";
+import { QualitiesProvider } from "../../hooks/useQualities";
+// import usersHttpService from "../../../services/users.service";
+// import api from "../../../api/index";
 
 const UsersList = () => {
-    const [users, delUser] = useState();
-    const [initialUsers, setInitialUsers] = useState();
-    // let initialData;
-    useEffect(function() {
-        api.users.fetchAll().then((data) => {
-            delUser(data);
-            setInitialUsers(data);
-        });
-    }, []);
+    const { users, setUsers } = useUsers();
+    const { professions, getProfession } = useProfessions();
 
     const deleteUser = (user_id) => {
-        return delUser(users.filter((element) => element._id !== user_id));
+        console.log(user_id);
+        return setUsers(users.filter((element) => element._id !== user_id));
     };
 
     const AddBookmarks = (user_id) => {
-        return delUser(
+        return setUsers(
             users.map((user) => {
                 if (user._id === user_id) {
                     user.bookmark
@@ -37,21 +35,16 @@ const UsersList = () => {
     };
     const pageSize = 5;
     const [currentPage, setCurrentPage] = useState(1);
-    const [proffessions, setProfessions] = useState();
+    // const [proffessions, setProfessions] = useState();
     const [selectedProfession, setSelectedProfession] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "acs" });
     const [searchValue, setSearchValue] = useState("");
-    useEffect(function() {
-        api.professions.fetchAll().then((data) => setProfessions(data));
-    }, []);
+    // useEffect(function() {
+    //     api.professions.fetchAll().then((data) => setProfessions(data));
+    // }, []);
     const handleSearch = (e) => {
         setSelectedProfession();
         setSearchValue(e.target.value);
-        const re = new RegExp(e.target.value.toLowerCase(), "gi");
-        const searchResult = initialUsers.filter((user) => {
-            return user.name.toLowerCase().match(re);
-        });
-        delUser(searchResult);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -61,11 +54,16 @@ const UsersList = () => {
     const ChangePage = (page) => {
         setCurrentPage(page);
     };
-    const filtretedUser = selectedProfession
-        ? initialUsers.filter((user) => {
-            return user.profession.name === selectedProfession;
+    const filtretedUser = searchValue
+        ? users.filter((user) => {
+            const re = new RegExp(searchValue.toLowerCase(), "gi");
+            return user.name.toLowerCase().match(re);
         })
-        : users;
+        : (selectedProfession
+            ? users.filter((user) => {
+                return getProfession(user.profession).name === selectedProfession;
+            })
+            : users);
     if (users) {
         const count = filtretedUser.length;
         const usersOnPage = SiparatePage(filtretedUser, pageSize, currentPage);
@@ -79,10 +77,10 @@ const UsersList = () => {
         };
         return (
             <div className="d-flex">
-                {proffessions && (
+                {professions && (
                     <div className="d-flex flex-column flex-shrink-0 p-3">
                         <GroupList
-                            professions={proffessions}
+                            professions={professions}
                             onFilter={(e) => {
                                 setCurrentPage(1);
                                 setSelectedProfession(e);
@@ -99,17 +97,23 @@ const UsersList = () => {
                     </div>
                 )}
                 <div className="d-flex flex-column">
-                    <Search onHandleSearch={handleSearch} onHandleSubmit = {handleSubmit} Value = {searchValue}/>
+                    <Search
+                        onHandleSearch={handleSearch}
+                        onHandleSubmit={handleSubmit}
+                        Value={searchValue}
+                    />
                     <SearchStatus users={filtretedUser}></SearchStatus>
                     {users.length > 0 && (
-                        <TableUsers
-                            sortedUsers={sortedUsers}
-                            currentSort={sortBy}
-                            onSort={handleSort}
-                            onDelete={deleteUser}
-                            onAddBookmark={AddBookmarks}
-                            // {...rest}
-                        ></TableUsers>
+                        <QualitiesProvider>
+                            <TableUsers
+                                sortedUsers={sortedUsers}
+                                currentSort={sortBy}
+                                onSort={handleSort}
+                                onDelete={deleteUser}
+                                onAddBookmark={AddBookmarks}
+                                // {...rest}
+                            ></TableUsers>
+                        </QualitiesProvider>
                     )}
                     <div className="d-flex justify-content-center mt-auto">
                         <Pagination

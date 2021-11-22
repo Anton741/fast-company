@@ -31,7 +31,7 @@ const UserPage = ({ userId }) => {
         return (
             <>
                 <div className="col-md-4 mb-3">
-                    <InfoCard userName = {user.name} profession = {user.profession.name} rate = {user.rate} userId = {userId} />
+                    <InfoCard user = {user} userId = {userId} />
                     < QualitiesCard qualities = { user.qualities }/>
                     <MeetingsCard countMeeting = {user.completedMeetings} />
                 </div>

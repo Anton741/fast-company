@@ -1,6 +1,6 @@
 import { useHistory } from "react-router";
 
-const InfoCard = ({ userName, profession, rate, userId }) => {
+const InfoCard = ({ user, userId }) => {
     const history = useHistory();
     // function getImage(url) {
     //     return fetch(url).then(response => response.json()).then(data => data);
@@ -25,8 +25,8 @@ const InfoCard = ({ userName, profession, rate, userId }) => {
                         width="150"
                     />
                     <div className="mt-3">
-                        <h4>{userName}</h4>
-                        <p className="text-secondary mb-1">{profession}</p>
+                        <h4>{user.name}</h4>
+                        <p className="text-secondary mb-1">{user.profession.name}</p>
                         <div className="text-muted">
                             <i
                                 className="bi bi-caret-down-fill text-primary"
@@ -36,7 +36,7 @@ const InfoCard = ({ userName, profession, rate, userId }) => {
                                 className="bi bi-caret-up text-secondary"
                                 role="button"
                             ></i>
-                            <span className="ms-2">{rate}</span>
+                            <span className="ms-2">{user.rate}</span>
                         </div>
                     </div>
                 </div>

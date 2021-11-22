@@ -1,10 +1,17 @@
-const Qualities = (props) => {
+import { useQualities } from "../hooks/useQualities";
+
+const Qualities = ({ qualities }) => {
+    const { getQuality } = useQualities();
     return (
         <>
-            {props.qualities.map((colorBlock) => {
+            {qualities.map((colorBlock) => {
+                const qual = getQuality(colorBlock);
                 return (
-                    <span className={`badge bg-${colorBlock.color} mx-2 fs-6`} key = {colorBlock._id}>
-                        {colorBlock.name}
+                    <span
+                        className={`badge bg-${qual.color} mx-2 fs-6`}
+                        key={qual._id}
+                    >
+                        {qual.name}
                     </span>
                 );
             })}
