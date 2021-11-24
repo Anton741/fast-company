@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { UserProvider } from "./components/hooks/useUsers";
 import { ProfessionsProvider } from "./components/hooks/useProfessions";
 import UsersMain from "./layouts/users";
+import Main from "./layouts/main";
 import NavBar from "./components/ui/navBar";
 import Login from "./layouts/login";
 // import EditForm from "./components/common/form/editForm";
@@ -17,7 +18,7 @@ const App = () => {
                     <ProfessionsProvider>
                         <Route path="/login/:type?" component={Login} />
                         <Route path="/users/:userId?/:edit?" component={UsersMain} />
-                        <Route path="/" exact render={() => <h1>Welcome!!!</h1>} />
+                        <Route path="/" exact component={Main} />
                     </ProfessionsProvider>
                 </Switch>
             </UserProvider>

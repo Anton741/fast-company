@@ -1,10 +1,23 @@
 import axios from "axios";
-import url from "../config.json";
+import configUrl from "../config.json";
 
 // console.log(url.apiEndpoint);
-axios.defaults.baseURL = url.apiEndpoint;
+axios.defaults.baseURL = configUrl.apiEndpoint;
+axios.interceptors.request.use(
+    function(config) {
+        if (configUrl.isFirebase) {
+            config.url = config.url.replace(/\/$/g, ".json");
+        }
+        return config;
+    }
+);
 axios.interceptors.response.use(
-    (res) => res,
+    (res) => {
+        if (configUrl.isFirebase) {
+            res.data = { content: Object.keys(res.data).map(item => res.data[item]) };
+        }
+        return res;
+    },
     function(error) {
         const expectedErrors =
           error.response &&
