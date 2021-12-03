@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import TextField from "./textField";
 import validator from "../../../utils/validator";
+import { useHistory } from "react-router";
 
 const LofinForm = () => {
     const [inputValue, setInputValue] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
+    const { singIn } = useAuth();
+    const history = useHistory();
     useEffect(function() {
         setErrors(validator(inputValue, valitadorConfig));
     }, [inputValue]);
@@ -27,7 +31,6 @@ const LofinForm = () => {
         }
     };
     function handleChange(target) {
-        console.log(inputValue);
         // setErrors(
         //     validator({ [e.target.name]: e.target.value }, valitadorConfig)
         // );
@@ -36,10 +39,16 @@ const LofinForm = () => {
             [target.name]: target.value
         }));
     }
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setErrors(validator(inputValue, valitadorConfig));
-        console.log("errors", errors);
+        try {
+            await singIn(inputValue);
+            history.push("/users");
+        } catch (error) {
+            setErrors(error);
+        }
+        // Object.keys(errors).length === 0 && history.push("/users");
     }
     return (
         <>

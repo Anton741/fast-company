@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { useProfessions } from "../../hooks/useProfessions";
+import { useQualities } from "../../hooks/useQualities";
+import { useAuth } from "../../hooks/useAuth";
 import TextField from "./textField";
 import SelectField from "./selectField";
 import RadioField from "./radioField";
 import MultipleSelectField from "./multipleSelectField";
 import CheckboxField from "./ckeckboxField";
 import validator from "../../../utils/validator";
-import api from "../../../api/index";
+import { useHistory } from "react-router";
 
 const RegistrationForm = () => {
     const [inputValue, setInputValue] = useState({
@@ -17,16 +20,10 @@ const RegistrationForm = () => {
         lisence: false
     });
     const [errors, setErrors] = useState({});
-    const [professions, setProfession] = useState();
-    const [qualities, setQualities] = useState();
-    useEffect(function() {
-        api.professions.fetchAll().then((data) => {
-            setProfession(data);
-        });
-        api.qualities.fetchAll().then((data) => {
-            setQualities(data);
-        });
-    }, []);
+    const { professions } = useProfessions();
+    const { qualities } = useQualities();
+    const { singUp } = useAuth();
+    const history = useHistory();
     useEffect(
         function() {
             setErrors(validator(inputValue, valitadorConfig));
@@ -65,7 +62,9 @@ const RegistrationForm = () => {
     function handleSubmit(e) {
         e.preventDefault();
         setErrors(validator(inputValue, valitadorConfig));
-        console.log("errors", errors);
+        const newData = { ...inputValue, qualities: inputValue.qualities.map(q => q.value) };
+        singUp(newData);
+        history.push("/");
     }
     return (
         <>

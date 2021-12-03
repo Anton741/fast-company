@@ -2,8 +2,10 @@ import axios from "axios";
 import configUrl from "../config.json";
 
 // console.log(url.apiEndpoint);
-axios.defaults.baseURL = configUrl.apiEndpoint;
-axios.interceptors.request.use(
+const http = axios.create({
+    baseURL: configUrl.apiEndpoint
+});
+http.interceptors.request.use(
     function(config) {
         if (configUrl.isFirebase) {
             config.url = config.url.replace(/\/$/g, ".json");
@@ -11,7 +13,7 @@ axios.interceptors.request.use(
         return config;
     }
 );
-axios.interceptors.response.use(
+http.interceptors.response.use(
     (res) => {
         if (configUrl.isFirebase) {
             res.data = { content: Object.keys(res.data).map(item => res.data[item]) };
@@ -31,9 +33,9 @@ axios.interceptors.response.use(
     }
 );
 const httpService = {
-    get: axios.get,
-    post: axios.post,
-    put: axios.put,
-    delete: axios.delete
+    get: http.get,
+    post: http.post,
+    put: http.put,
+    delete: http.delete
 };
 export default httpService;

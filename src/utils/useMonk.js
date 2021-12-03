@@ -11,47 +11,51 @@ const useMonk = () => {
         successed: "Ready",
         error: "Error occured"
     };
-    // const [error, setError] = useState(null);
+    const [error, setError] = useState(null);
     const [status, setStatus] = useState(statusConsts.idle);
-    const [progress, setProgress] = useState(0);
     const [count, setCount] = useState(0);
-    const summuryCount = professions.length + qualities.length + users.length;
-    const incrementCount = () => {
-        setCount((prevState) => prevState + 1);
-    };
-    const updateProgress = () => {
-        if (count !== 0 && status === statusConsts.idle) {
+    const [progress, setProgress] = useState(0);
+
+    const totalItem = professions.length + qualities.length + users.length;
+    function incrementCount() {
+        setCount(prev => prev + 1);
+    }
+    function watcherProgress() {
+        setProgress(Math.floor(count / totalItem * 100));
+        if (count > 0) {
             setStatus(statusConsts.pending);
         }
-        const newProgress = Math.floor((count / summuryCount) * 100);
-        if (progress < newProgress) {
-            setProgress(() => newProgress);
-        }
-        if (newProgress === 100) {
+        if (count === totalItem) {
             setStatus(statusConsts.successed);
         }
-    };
+    }
+    useEffect(watcherProgress, [count]);
 
-    useEffect(() => {
-        updateProgress();
-    }, [count]);
     async function initialize() {
-        for (const qual of qualities) {
-            await httpService.put("qualities/" + qual._id + ".json", qual);
-            incrementCount();
-        }
-        for (const user of users) {
-            await httpService.put("users/" + user._id + ".json", user);
-            incrementCount();
-        }
-        for (const prof of professions) {
-            await httpService.put("professions/" + prof._id + ".json",
-                prof);
-            incrementCount();
+        setStatus(statusConsts.idle);
+        setProgress(0);
+        setCount(0);
+        try {
+            for (const qual of qualities) {
+                await httpService.put("qualities/" + qual._id + ".json", qual);
+                incrementCount();
+            }
+            for (const user of users) {
+                await httpService.put("users/" + user._id + ".jso", user);
+                incrementCount();
+            }
+            for (const prof of professions) {
+                await httpService.put("professions/" + prof._id + ".json",
+                    prof);
+                incrementCount();
+            }
+        } catch (error) {
+            setStatus(statusConsts.error);
+            setError(error.message);
         }
     }
 
-    return ({ initialize, progress, status });
+    return ({ initialize, progress, status, error });
 };
 
 export default useMonk;

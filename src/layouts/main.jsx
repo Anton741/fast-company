@@ -2,7 +2,7 @@ import React from "react";
 import useMockData from "../utils/useMonk";
 
 const Main = () => {
-    const { initialize, progress, status } = useMockData();
+    const { initialize, progress, status, error } = useMockData();
     const handleClick = () => {
         initialize();
     };
@@ -12,8 +12,10 @@ const Main = () => {
             <h3>Инициализация данных в FireBase</h3>
             <ul>
                 <li>Status:{status}</li>
-                <li>Progress: {progress}%</li>
-                {/* {error && <li>error: {error}</li>} */}
+                <li>
+                    Progress: {progress}%
+                </li>
+                {error && <li>error: {error}</li>}
             </ul>
             <button className="btn btn-primary" onClick={handleClick}>
                 {" "}

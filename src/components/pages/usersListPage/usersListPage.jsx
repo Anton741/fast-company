@@ -8,7 +8,6 @@ import { SiparatePage } from "../../../utils/seperatePage";
 import _ from "lodash";
 import TableUsers from "../../ui/userTable";
 import Search from "../../common/form/search";
-import { QualitiesProvider } from "../../hooks/useQualities";
 // import usersHttpService from "../../../services/users.service";
 // import api from "../../../api/index";
 
@@ -104,16 +103,14 @@ const UsersList = () => {
                     />
                     <SearchStatus users={filtretedUser}></SearchStatus>
                     {users.length > 0 && (
-                        <QualitiesProvider>
-                            <TableUsers
-                                sortedUsers={sortedUsers}
-                                currentSort={sortBy}
-                                onSort={handleSort}
-                                onDelete={deleteUser}
-                                onAddBookmark={AddBookmarks}
-                                // {...rest}
-                            ></TableUsers>
-                        </QualitiesProvider>
+                        <TableUsers
+                            sortedUsers={sortedUsers}
+                            currentSort={sortBy}
+                            onSort={handleSort}
+                            onDelete={deleteUser}
+                            onAddBookmark={AddBookmarks}
+                            // {...rest}
+                        ></TableUsers>
                     )}
                     <div className="d-flex justify-content-center mt-auto">
                         <Pagination

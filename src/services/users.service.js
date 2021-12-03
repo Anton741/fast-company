@@ -18,6 +18,11 @@ const usersHttpService = {
     fetchAll: async() => {
         const { data } = await httpService.get(usersEndpoint);
         return data;
+    },
+    create: async(user) => {
+        console.log(user);
+        const { data } = await httpService.put(usersEndpoint + user._id + ".json", user);
+        return data;
     }
 };
 export default usersHttpService;
