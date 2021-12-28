@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import TextField from "./textField";
 import validator from "../../../utils/validator";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const LofinForm = () => {
     const [inputValue, setInputValue] = useState({ email: "", password: "" });
@@ -44,7 +44,7 @@ const LofinForm = () => {
         setErrors(validator(inputValue, valitadorConfig));
         try {
             await singIn(inputValue);
-            history.push("/users");
+            history.push("/");
         } catch (error) {
             setErrors(error);
         }

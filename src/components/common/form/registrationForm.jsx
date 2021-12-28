@@ -8,10 +8,12 @@ import RadioField from "./radioField";
 import MultipleSelectField from "./multipleSelectField";
 import CheckboxField from "./ckeckboxField";
 import validator from "../../../utils/validator";
+import randomValue from "../../../utils/randomValue";
 import { useHistory } from "react-router";
 
 const RegistrationForm = () => {
     const [inputValue, setInputValue] = useState({
+        name: "",
         email: "",
         password: "",
         professions: "Choose...",
@@ -31,6 +33,11 @@ const RegistrationForm = () => {
         [inputValue]
     );
     const valitadorConfig = {
+        name: {
+            isRequire: {
+                message: "Name is nessasary field"
+            }
+        },
         email: {
             isRequire: {
                 message: "Email is nessasary field"
@@ -59,16 +66,32 @@ const RegistrationForm = () => {
             [target.name]: target.value
         }));
     }
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setErrors(validator(inputValue, valitadorConfig));
-        const newData = { ...inputValue, qualities: inputValue.qualities.map(q => q.value) };
-        singUp(newData);
-        history.push("/");
+        const newData = {
+            ...inputValue,
+            qualities: inputValue.qualities.map((q) => q.value),
+            rate: randomValue(),
+            completedMeetings: randomValue()
+        };
+        try {
+            await singUp(newData);
+            history.push("/");
+        } catch (error) {
+            setErrors(error);
+        }
     }
     return (
         <>
             <form onSubmit={handleSubmit}>
+                <TextField
+                    fieldType="name"
+                    fieldName="name"
+                    fieldLable="Введите ваше имя"
+                    onHandleChange={handleChange}
+                    error={errors.name}
+                />
                 <TextField
                     fieldType="email"
                     fieldName="email"

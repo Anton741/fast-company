@@ -4,11 +4,11 @@ const usersEndpoint = "users/";
 
 const usersHttpService = {
     get: async(id) => {
-        const { data } = await httpService.get(usersEndpoint + id);
+        const { data } = await httpService.get(usersEndpoint + id + ".json");
         return data;
     },
-    uptade: async(id, content) => {
-        const { data } = await httpService.put(usersEndpoint + id, content);
+    update: async(id, content) => {
+        const { data } = await httpService.put(usersEndpoint + id + ".json", content);
         return data;
     },
     delete: async(id) => {

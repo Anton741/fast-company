@@ -18,6 +18,8 @@ export const ProfessionsProvider = ({ children }) => {
     };
     useEffect(() => getProfssions(), []);
     function getProfession(id) {
+        console.log(professions);
+        console.log(id);
         return professions.find(prof => prof._id === id);
     }
     return <ProfessionsContex.Provider value = {{ professions, setProfessions, getProfession }}>{!isLoad ? children : <h1>Loading....</h1>}</ProfessionsContex.Provider>;

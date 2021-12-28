@@ -16,7 +16,7 @@ const SelectField = ({ data, OnHandleChange, label, name, error, defaultOption, 
                 onChange={handleChange}
                 name={name}
             >
-                {defaultOption && <option selected>{defaultOption}</option>}
+                {defaultOption && <option selected value={defaultOption._id}>{defaultOption.name}</option>}
                 {Object.values(data).map((optionName) => {
                     return (
                         <option selected = {optionName._id === userId} value={optionName._id} key={optionName._id}>

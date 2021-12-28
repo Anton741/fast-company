@@ -8,10 +8,12 @@ import { SiparatePage } from "../../../utils/seperatePage";
 import _ from "lodash";
 import TableUsers from "../../ui/userTable";
 import Search from "../../common/form/search";
+import { useAuth } from "../../hooks/useAuth";
 // import usersHttpService from "../../../services/users.service";
 // import api from "../../../api/index";
 
 const UsersList = () => {
+    const { currentUser } = useAuth();
     const { users, setUsers } = useUsers();
     const { professions, getProfession } = useProfessions();
 
@@ -56,13 +58,13 @@ const UsersList = () => {
     const filtretedUser = searchValue
         ? users.filter((user) => {
             const re = new RegExp(searchValue.toLowerCase(), "gi");
-            return user.name.toLowerCase().match(re);
+            return user.name.toLowerCase().match(re) && user._id !== currentUser._id;
         })
         : (selectedProfession
             ? users.filter((user) => {
-                return getProfession(user.profession).name === selectedProfession;
+                return getProfession(user.profession).name === selectedProfession && user._id !== currentUser._id;
             })
-            : users);
+            : users.filter(user => user._id !== currentUser._id));
     if (users) {
         const count = filtretedUser.length;
         const usersOnPage = SiparatePage(filtretedUser, pageSize, currentPage);

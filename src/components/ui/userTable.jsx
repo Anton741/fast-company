@@ -21,7 +21,7 @@ const TableUsers = ({
             name: "Качества",
             component: (user) => <Qualities qualities={user.qualities} />
         },
-        profession: { iter: "profession.name", name: "Профессия", component: (user) => <Profession id = {user.profession} /> },
+        profession: { iter: "profession.name", name: "Профессия", component: (user) => <Profession id = {user.professions} /> },
         bookmark: {
             iter: "bookmark",
             name: "Избранное",

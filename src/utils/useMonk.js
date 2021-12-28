@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import users from "../mockData/users.json";
 import professions from "../mockData/professions.json";
 import qualities from "../mockData/qualities.json";
+import comments from "../mockData/comments.json";
 import httpService from "../services/http.service";
 
 const useMonk = () => {
@@ -36,19 +37,23 @@ const useMonk = () => {
         setProgress(0);
         setCount(0);
         try {
-            for (const qual of qualities) {
-                await httpService.put("qualities/" + qual._id + ".json", qual);
+            // for (const qual of qualities) {
+            //     await httpService.put("qualities/" + qual._id + ".json", qual);
+            //     incrementCount();
+            // }
+            // for (const user of users) {
+            //     await httpService.put("users/" + user._id + ".jso", user);
+            //     incrementCount();
+            // }
+            for (const comment of comments) {
+                await httpService.put("comments/" + comment._id + ".jso", comment);
                 incrementCount();
             }
-            for (const user of users) {
-                await httpService.put("users/" + user._id + ".jso", user);
-                incrementCount();
-            }
-            for (const prof of professions) {
-                await httpService.put("professions/" + prof._id + ".json",
-                    prof);
-                incrementCount();
-            }
+            // for (const prof of professions) {
+            //     await httpService.put("professions/" + prof._id + ".json",
+            //         prof);
+            //     incrementCount();
+            // }
         } catch (error) {
             setStatus(statusConsts.error);
             setError(error.message);

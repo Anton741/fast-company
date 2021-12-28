@@ -5,6 +5,7 @@ const TextField = ({ fieldType, value, fieldName, fieldLable, onHandleChange, er
     const handleChange = ({ target }) => {
         onHandleChange({ name: target.name, value: target.value });
     };
+    console.log(error);
     return (
         <div className="mb-4">
             <label htmlFor={`#${fieldName}`} className ="form-label">{fieldLable}</label>
