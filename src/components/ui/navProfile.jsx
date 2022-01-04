@@ -13,11 +13,7 @@ const NavProfile = () => {
             >
                 <div className="me-2">{currentUser.name}</div>
                 <img
-                    src={`https://avatars.dicebear.com/api/avataaars/${(
-                        Math.random() + 1
-                    )
-                        .toString(36)
-                        .substring(7)}.svg`}
+                    src={currentUser.photo}
                     className="rounded-circle"
                     width="150"
                     height="40"

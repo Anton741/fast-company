@@ -5,7 +5,6 @@ import Profession from "./profession";
 const InfoCard = ({ user, userId }) => {
     const history = useHistory();
     const { currentUser } = useAuth();
-    console.log("hjhjkjkkjh");
     // function getImage(url) {
     //     return fetch(url).then(response => response.json()).then(data => data);
     // }
@@ -21,11 +20,7 @@ const InfoCard = ({ user, userId }) => {
                 </button>)}
                 <div className="d-flex flex-column align-items-center text-center position-relative">
                     <img
-                        src={`https://avatars.dicebear.com/api/avataaars/${(
-                            Math.random() + 1
-                        )
-                            .toString(36)
-                            .substring(7)}.svg`}
+                        src={user.photo}
                         className="rounded-circle"
                         width="150"
                     />

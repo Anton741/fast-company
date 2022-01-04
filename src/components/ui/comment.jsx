@@ -3,7 +3,6 @@ import { useComments } from "../hooks/useComments";
 import { publishedDate } from "../../utils/publishedDate";
 
 const CommentCard = ({ comment }) => {
-    const imgPath = `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1).toString(36).substring(7)}.svg`;
     const { getUsersById } = useUsers();
     const user = getUsersById(comment.userId);
     const { removeComment } = useComments();
@@ -14,7 +13,7 @@ const CommentCard = ({ comment }) => {
                     <div className="col">
                         <div className="d-flex flex-start ">
                             <img
-                                src={imgPath}
+                                src={user.photo}
                                 className="rounded-circle shadow-1-strong me-3"
                                 alt="avatar"
                                 width="65"

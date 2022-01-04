@@ -73,7 +73,8 @@ const RegistrationForm = () => {
             ...inputValue,
             qualities: inputValue.qualities.map((q) => q.value),
             rate: randomValue(),
-            completedMeetings: randomValue()
+            completedMeetings: randomValue(),
+            photo: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1).toString(36).substring(7)}.svg`
         };
         try {
             await singUp(newData);
