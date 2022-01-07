@@ -4,15 +4,16 @@ import TextField from "./textField";
 import SelectField from "./selectField";
 import RadioField from "./radioField";
 import MultipleSelectField from "./multipleSelectField";
-import { useProfessions } from "../../hooks/useProfessions";
-import { useQualities } from "../../hooks/useQualities";
 import { useAuth } from "../../hooks/useAuth";
 import { useUsers } from "../../hooks/useUsers";
+import { useSelector } from "react-redux";
+import { getQualities } from "../../../store/qualitiesReducer";
+import { getProfessions } from "../../../store/professionsReducer";
 
 const EditForm = () => {
     const history = useHistory();
-    const { professions } = useProfessions();
-    const { qualities } = useQualities();
+    const professions = useSelector(getProfessions());
+    const qualities = useSelector(getQualities());
     const { editUser } = useUsers();
     const user = useAuth().currentUser;
     const [inputValue, setInputValue] = useState({

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useUsers } from "../../hooks/useUsers";
-import { useProfessions } from "../../hooks/useProfessions";
 import SearchStatus from "../../ui/search_status";
 import Pagination from "../../common/pagination";
 import GroupList from "../../common/groupList";
@@ -9,16 +8,17 @@ import _ from "lodash";
 import TableUsers from "../../ui/userTable";
 import Search from "../../common/form/search";
 import { useAuth } from "../../hooks/useAuth";
+import { getProfessions } from "../../../store/professionsReducer";
+import { useSelector } from "react-redux";
 // import usersHttpService from "../../../services/users.service";
 // import api from "../../../api/index";
 
 const UsersList = () => {
     const { currentUser } = useAuth();
     const { users, setUsers } = useUsers();
-    const { professions, getProfession } = useProfessions();
+    const professions = useSelector(getProfessions());
 
     const deleteUser = (user_id) => {
-        console.log(user_id);
         return setUsers(users.filter((element) => element._id !== user_id));
     };
 
@@ -36,13 +36,9 @@ const UsersList = () => {
     };
     const pageSize = 5;
     const [currentPage, setCurrentPage] = useState(1);
-    // const [proffessions, setProfessions] = useState();
     const [selectedProfession, setSelectedProfession] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "acs" });
     const [searchValue, setSearchValue] = useState("");
-    // useEffect(function() {
-    //     api.professions.fetchAll().then((data) => setProfessions(data));
-    // }, []);
     const handleSearch = (e) => {
         setSelectedProfession();
         setSearchValue(e.target.value);
@@ -62,7 +58,7 @@ const UsersList = () => {
         })
         : (selectedProfession
             ? users.filter((user) => {
-                return getProfession(user.profession).name === selectedProfession && user._id !== currentUser._id;
+                return professions.find(prof => prof._id === user.professions).name === selectedProfession && user._id !== currentUser._id;
             })
             : users.filter(user => user._id !== currentUser._id));
     if (users) {

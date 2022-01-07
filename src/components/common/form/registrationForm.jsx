@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useProfessions } from "../../hooks/useProfessions";
-import { useQualities } from "../../hooks/useQualities";
 import { useAuth } from "../../hooks/useAuth";
 import TextField from "./textField";
 import SelectField from "./selectField";
@@ -10,6 +8,9 @@ import CheckboxField from "./ckeckboxField";
 import validator from "../../../utils/validator";
 import randomValue from "../../../utils/randomValue";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { getQualities } from "../../../store/qualitiesReducer";
+import { getProfessions } from "../../../store/professionsReducer";
 
 const RegistrationForm = () => {
     const [inputValue, setInputValue] = useState({
@@ -22,8 +23,8 @@ const RegistrationForm = () => {
         lisence: false
     });
     const [errors, setErrors] = useState({});
-    const { professions } = useProfessions();
-    const { qualities } = useQualities();
+    const professions = useSelector(getProfessions());
+    const qualities = useSelector(getQualities());
     const { singUp } = useAuth();
     const history = useHistory();
     useEffect(

@@ -1,10 +1,8 @@
-import { useProfessions } from "../hooks/useProfessions";
+import { useSelector } from "react-redux";
+import { getProfessions } from "../../store/professionsReducer";
 const Profession = ({ id }) => {
-    console.log(id);
-    const { getProfession } = useProfessions();
-    const prof = getProfession(id);
-    console.log(prof);
-    return (prof.name);
+    const professions = useSelector(getProfessions());
+    return professions.find((prof) => prof._id === id).name;
 };
 
 export default Profession;

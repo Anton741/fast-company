@@ -1,11 +1,12 @@
-import { useQualities } from "../hooks/useQualities";
+import { useSelector } from "react-redux";
+import { getQualitiesListByIds } from "../../store/qualitiesReducer";
 
 const Qualities = ({ qualities }) => {
-    const { getQuality } = useQualities();
+    const qualitiesList = useSelector(getQualitiesListByIds(qualities));
+    console.log(qualitiesList);
     return (
         <>
-            {qualities.map((colorBlock) => {
-                const qual = getQuality(colorBlock);
+            {qualitiesList.map((qual) => {
                 return (
                     <span
                         className={`badge bg-${qual.color} mx-2 fs-6`}
