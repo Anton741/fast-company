@@ -1,12 +1,11 @@
-
-import { useComments } from "../hooks/useComments";
 import { publishedDate } from "../../utils/publishedDate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUsersById } from "../../store/usersReducer";
+import { removeComments } from "../../store/commentsReducer";
 
 const CommentCard = ({ comment }) => {
     const user = useSelector(getUsersById(comment.userId));
-    const { removeComment } = useComments();
+    const dispatch = useDispatch();
     return (
         <>
             <div className="bg-light card-body  mb-3">
@@ -32,7 +31,7 @@ const CommentCard = ({ comment }) => {
                                         <button
                                             className="btn btn-sm text-primary d-flex align-items-center"
                                             onClick={() =>
-                                                removeComment(comment._id)
+                                                dispatch(removeComments(comment._id))
                                             }
                                         >
                                             <i className="bi bi-x-lg"></i>

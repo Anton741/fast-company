@@ -3,13 +3,13 @@ import { useState } from "react";
 import * as yup from "yup";
 import { nanoid } from "nanoid";
 import TextField from "../common/form/textField";
-import { useComments } from "../hooks/useComments";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../store/usersReducer";
+import { addComment } from "../../store/commentsReducer";
 
 const NewCommentForm = ({ updateCommentsList }) => {
-    const { addComment } = useComments();
+    const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUser());
     const params = useParams();
     const { userId } = params;
@@ -32,7 +32,7 @@ const NewCommentForm = ({ updateCommentsList }) => {
         validateScheme
             .validate(inputValue)
             .then(function() {
-                addComment(newComment);
+                dispatch(addComment(newComment));
                 setInputValue({ content: "" });
                 setErrors({});
             })

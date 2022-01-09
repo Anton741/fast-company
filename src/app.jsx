@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-// import { AuthProvider } from "./components/hooks/useAuth";
 import UsersMain from "./layouts/users";
 import Main from "./layouts/main";
 import NavBar from "./components/ui/navBar";
@@ -13,7 +12,6 @@ const App = () => {
     return (
         <>
             <AppLoader>
-                {/* <AuthProvider> */}
                 <NavBar />
                 <Switch>
                     <Route path="/logout/" component={LogOut} />
@@ -24,7 +22,6 @@ const App = () => {
                     />
                     <Route path="/" exact component={Main} />
                 </Switch>
-                {/* </AuthProvider> */}
             </AppLoader>
         </>
     );

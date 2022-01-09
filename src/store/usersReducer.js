@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import authService from "../services/auth.service";
 import { getTokenKey, getUserKey, revomeTokens, setTokens } from "../services/localStorige.service";
 import usersHttpService from "../services/users.service";
+import errorAuthGenerate from "../utils/errorAuthGenerate";
 import history from "../utils/history";
 
 const initialState = getTokenKey()
@@ -44,6 +45,7 @@ const usersSlice = createSlice({
         userAuthSuccess(state, action) {
             state.auth = { ...action.payload };
             state.isLogging = true;
+            state.error = null;
         },
         userAuthFail(state, action) {
             state.error = action.payload;
@@ -97,12 +99,8 @@ export const singUp = ({ email, password, ...rest }) => async(dispatch) => {
         dispatch(createUser({ email, _id: data.localId, ...rest }));
         history.push("/users");
     } catch (error) {
-        const { code, message } = error.response.data.error;
-        if (code === 400) {
-            if (message === "EMAIL_EXISTS") {
-                dispatch(userAuthFail("Пользователь с таким email существует"));
-            }
-        }
+        const err = errorAuthGenerate(error);
+        dispatch(userAuthFail(err));
     }
 };
 
@@ -112,12 +110,8 @@ export const singIn = ({ email, password }) => async(dispatch) => {
         setTokens(data);
         dispatch(userAuthSuccess({ userId: data.localId }));
     } catch (error) {
-        const { code, message } = error.response.data.error;
-        if (code === 400) {
-            if (message === "INVALID_PASSWORD") {
-                dispatch(userAuthFail("Неправидьный логин или пароль"));
-            }
-        }
+        const err = errorAuthGenerate(error);
+        dispatch(userAuthFail(err));
     }
     history.push("/users");
 };
@@ -138,5 +132,7 @@ export const getCurrentUser = () => (state) => {
         ? state.users.entities.find(user => user._id === state.users.auth.userId)
         : null;
 };
+
+export const getAuthError = () => (state) => state.users.error;
 
 export default usersReducer;
