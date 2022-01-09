@@ -1,29 +1,18 @@
 
-// import { useHistory } from "react-router-dom";
 // import Qualities from "../../ui/qualities";
 import InfoCard from "../../ui/infoCard";
 import QualitiesCard from "../../ui/qualitiesCard";
 import MeetingsCard from "../../ui/meetingsCard";
 import CommentsList from "../../ui/commentsList";
 import NewCommentForm from "../../ui/newCommentForm";
-import { useUsers } from "../../hooks/useUsers";
 import { CommentsProvider } from "../../hooks/useComments";
-import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getUsersById } from "../../../store/usersReducer";
 // import { useEffect, useState } from "react";
 // import api from "../../../api/index";
 
 const UserPage = ({ userId }) => {
-    // const [user, setUser] = useState();
-    const { getUsersById } = useUsers();
-    const user = getUsersById(userId);
-    console.log(user, "USER IN PAGE");
-    const { currentUser } = useAuth();
-    console.log(currentUser);
-    // const [user, setUser] = useState();
-    // useEffect(() => {
-    //     setUser(getUsersById(userId));
-    //     console.log("useEffect");
-    // }, []);
+    const user = useSelector(getUsersById(userId));
     // useEffect(() => {
     //     api.users.getById(userId).then((data) => {
     //         setUser(data);

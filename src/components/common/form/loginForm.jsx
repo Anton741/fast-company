@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import TextField from "./textField";
 import validator from "../../../utils/validator";
-import { useHistory } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { singIn } from "../../../store/usersReducer";
 const LofinForm = () => {
+    const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
-    const { singIn } = useAuth();
-    const history = useHistory();
     useEffect(function() {
         setErrors(validator(inputValue, valitadorConfig));
     }, [inputValue]);
@@ -42,13 +40,7 @@ const LofinForm = () => {
     async function handleSubmit(e) {
         e.preventDefault();
         setErrors(validator(inputValue, valitadorConfig));
-        try {
-            await singIn(inputValue);
-            history.push("/");
-        } catch (error) {
-            setErrors(error);
-        }
-        // Object.keys(errors).length === 0 && history.push("/users");
+        dispatch(singIn({ ...inputValue, redirect: "/users" }));
     }
     return (
         <>

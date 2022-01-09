@@ -4,18 +4,17 @@ import TextField from "./textField";
 import SelectField from "./selectField";
 import RadioField from "./radioField";
 import MultipleSelectField from "./multipleSelectField";
-import { useAuth } from "../../hooks/useAuth";
-import { useUsers } from "../../hooks/useUsers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getQualities } from "../../../store/qualitiesReducer";
 import { getProfessions } from "../../../store/professionsReducer";
+import { editUser, getCurrentUser } from "../../../store/usersReducer";
 
 const EditForm = () => {
     const history = useHistory();
     const professions = useSelector(getProfessions());
     const qualities = useSelector(getQualities());
-    const { editUser } = useUsers();
-    const user = useAuth().currentUser;
+    const dispatch = useDispatch();
+    const user = useSelector(getCurrentUser());
     const [inputValue, setInputValue] = useState({
         name: null,
         emai: null,
@@ -34,7 +33,6 @@ const EditForm = () => {
     }
     function updateUserInfo(e) {
         e.preventDefault();
-        console.log(e.target.professions.value);
         const updatedQualities = Object.values(e.target.qualities).map((q) => {
             return q.value;
         });
@@ -46,7 +44,7 @@ const EditForm = () => {
             professions: e.target.professions.value,
             sex: e.target.sex.value
         };
-        editUser(newData);
+        dispatch(editUser(newData));
         history.push(`/users/${user._id}`);
     }
     return (

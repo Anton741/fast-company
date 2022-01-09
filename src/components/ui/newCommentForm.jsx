@@ -5,11 +5,12 @@ import { nanoid } from "nanoid";
 import TextField from "../common/form/textField";
 import { useComments } from "../hooks/useComments";
 import { useParams } from "react-router";
-import { useAuth } from "../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getCurrentUser } from "../../store/usersReducer";
 
 const NewCommentForm = ({ updateCommentsList }) => {
     const { addComment } = useComments();
-    const { currentUser } = useAuth();
+    const currentUser = useSelector(getCurrentUser());
     const params = useParams();
     const { userId } = params;
     const [inputValue, setInputValue] = useState({ content: "" });

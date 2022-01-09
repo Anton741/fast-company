@@ -5,16 +5,18 @@ import Bookmarks from "./bookmark";
 import Qualities from "./qualities";
 import Profession from "./profession";
 import { Link } from "react-router-dom";
+import { deleteUser } from "../../store/usersReducer";
+import { useDispatch } from "react-redux";
 
 const TableUsers = ({
     users,
     sortedUsers,
     currentSort,
     onSort,
-    onDelete,
     onAddBookmark,
     ...rest
 }) => {
+    const dispatch = useDispatch();
     const columns = {
         name: { iter: "name", name: "Имя", component: user => <Link to = {`/users/${user._id}`} >{user.name}</Link> },
         qualities: {
@@ -42,7 +44,7 @@ const TableUsers = ({
             component: (user) => (
                 <button
                     className="btn btn-danger"
-                    onClick={() => onDelete(user._id)}
+                    onClick={() => dispatch(deleteUser(user._id))}
                 >
                     Delete
                 </button>

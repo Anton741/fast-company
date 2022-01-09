@@ -39,7 +39,6 @@ http.interceptors.request.use(
 http.interceptors.response.use(
     (res) => {
         if (configUrl.isFirebase) {
-            console.log(res);
             if (res.data !== null && !res.data._id) {
                 res.data = { content: Object.keys(res.data).map(item => res.data[item]) };
             }

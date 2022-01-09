@@ -1,10 +1,14 @@
-import { useAuth } from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getCurrentUser } from "../../store/usersReducer";
 
 const NavProfile = () => {
-    const { currentUser } = useAuth();
+    const currentUser = useSelector(getCurrentUser());
     const [isOpen, setOpen] = useState(false);
+    if (!currentUser) {
+        return "loading...";
+    }
     return (
         <div className="dropdown">
             <div

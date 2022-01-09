@@ -1,11 +1,9 @@
-import { useAuth } from "../hooks/useAuth";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../store/usersReducer";
 
 const LogOut = () => {
-    const { logout } = useAuth();
-    const history = useHistory();
-    logout();
-    history.push("/login/");
+    const dispatch = useDispatch();
+    dispatch(logOut());
     return (<h1>loading...</h1>);
 };
 

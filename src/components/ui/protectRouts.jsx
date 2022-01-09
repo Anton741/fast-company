@@ -1,11 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { getIsLogging } from "../../store/usersReducer";
 
 const ProtectRoutes = ({ component: Component, children, ...rest }) => {
-    const { currentUser } = useAuth();
+    const isLogging = useSelector(getIsLogging());
     return (<Route {...rest} render = {(props) => {
-        if (!currentUser) {
+        if (!isLogging) {
             return <Redirect to ="/login/"/>;
         }
         return Component ? <Component {...props}/> : children;

@@ -1,10 +1,11 @@
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { useAuth } from "../hooks/useAuth";
+import { getCurrentUser } from "../../store/usersReducer";
 import Profession from "./profession";
 
 const InfoCard = ({ user, userId }) => {
     const history = useHistory();
-    const { currentUser } = useAuth();
+    const currentUser = useSelector(getCurrentUser());
     // function getImage(url) {
     //     return fetch(url).then(response => response.json()).then(data => data);
     // }

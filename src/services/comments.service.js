@@ -5,7 +5,6 @@ const commentsEndpoint = "comments/";
 
 const commentsHttpService = {
     createComment: async(payload) => {
-        console.log(payload._id);
         const { data } = await httpService.put(commentsEndpoint + payload._id + '.json', payload);
         return data;
     },

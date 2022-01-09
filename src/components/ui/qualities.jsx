@@ -1,9 +1,12 @@
+// import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getQualitiesListByIds } from "../../store/qualitiesReducer";
-
 const Qualities = ({ qualities }) => {
+    // const dispatch = useDispatch();
     const qualitiesList = useSelector(getQualitiesListByIds(qualities));
-    console.log(qualitiesList);
+    // useEffect(() => {
+    //     dispatch(loadQualities());
+    // }, []);
     return (
         <>
             {qualitiesList.map((qual) => {

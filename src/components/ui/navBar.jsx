@@ -1,9 +1,10 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { getIsLogging } from "../../store/usersReducer";
 import NavProfile from "./navProfile";
 
 const NavBar = () => {
-    const { currentUser } = useAuth();
+    const LogIn = useSelector(getIsLogging());
     return (
         <nav className ="navbar">
             <div className="container-fluid">
@@ -16,7 +17,7 @@ const NavBar = () => {
                     </li>
                 </ul>
                 <div className="d-flex">
-                    {!currentUser ? <Link className ="nav-link" to="/login">Login</Link> : <NavProfile/>}
+                    {!LogIn ? <Link className ="nav-link" to="/login">Login</Link> : <NavProfile/>}
                 </div>
             </div>
         </nav>

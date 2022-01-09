@@ -1,10 +1,11 @@
-import { useUsers } from "../hooks/useUsers";
+
 import { useComments } from "../hooks/useComments";
 import { publishedDate } from "../../utils/publishedDate";
+import { useSelector } from "react-redux";
+import { getUsersById } from "../../store/usersReducer";
 
 const CommentCard = ({ comment }) => {
-    const { getUsersById } = useUsers();
-    const user = getUsersById(comment.userId);
+    const user = useSelector(getUsersById(comment.userId));
     const { removeComment } = useComments();
     return (
         <>

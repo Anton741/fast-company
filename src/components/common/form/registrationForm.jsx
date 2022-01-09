@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import TextField from "./textField";
 import SelectField from "./selectField";
 import RadioField from "./radioField";
@@ -7,12 +6,13 @@ import MultipleSelectField from "./multipleSelectField";
 import CheckboxField from "./ckeckboxField";
 import validator from "../../../utils/validator";
 import randomValue from "../../../utils/randomValue";
-import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getQualities } from "../../../store/qualitiesReducer";
 import { getProfessions } from "../../../store/professionsReducer";
+import { singUp } from "../../../store/usersReducer";
 
 const RegistrationForm = () => {
+    const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState({
         name: "",
         email: "",
@@ -25,8 +25,6 @@ const RegistrationForm = () => {
     const [errors, setErrors] = useState({});
     const professions = useSelector(getProfessions());
     const qualities = useSelector(getQualities());
-    const { singUp } = useAuth();
-    const history = useHistory();
     useEffect(
         function() {
             setErrors(validator(inputValue, valitadorConfig));
@@ -78,8 +76,7 @@ const RegistrationForm = () => {
             photo: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1).toString(36).substring(7)}.svg`
         };
         try {
-            await singUp(newData);
-            history.push("/");
+            dispatch(singUp(newData));
         } catch (error) {
             setErrors(error);
         }

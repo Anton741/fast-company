@@ -12,7 +12,7 @@ const usersHttpService = {
         return data;
     },
     delete: async(id) => {
-        const { data } = await httpService.get(usersEndpoint + id);
+        const { data } = await httpService.delete(usersEndpoint + id + ".json");
         return data;
     },
     fetchAll: async() => {
@@ -20,7 +20,6 @@ const usersHttpService = {
         return data;
     },
     create: async(user) => {
-        console.log(user);
         const { data } = await httpService.put(usersEndpoint + user._id + ".json", user);
         return data;
     }
